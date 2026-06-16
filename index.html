@@ -73,6 +73,12 @@
       --t-cta: #6600cc;
     }
 
+    .tagline.green {
+      --t-grad-1: #5ae38a;
+      --t-grad-2: #c3e6b8;
+      --t-cta: #00d26c;
+    }
+
     .headline {
       font-weight: 700;
       font-size: clamp(40px, 7vw, 90px);
@@ -514,6 +520,24 @@
 
   <div class="spacer spacer--small"></div>
 
+  <section class="tagline green" data-bg="#efffe8">
+    <h1 class="headline" aria-label="Achieve your health and wellness goals.">
+      <span class="word">Achieve</span>
+      <span class="word">your</span>
+      <span class="chip"><img src="assets/goals1.png" alt=""></span>
+      <span class="word gradient">health</span>
+
+      <span class="word gradient">and&nbsp;wellness</span>
+      <span class="chip"><img src="assets/goals2.png" alt=""></span>
+
+      <span class="word">goals.</span>
+    </h1>
+
+    <a href="#" class="cta">Try Fitpass</a>
+  </section>
+
+  <div class="spacer"></div>
+
   <section class="stats" data-bg="#f6f2ec">
     <div class="stats__row">
       <article class="stat-card">
@@ -717,10 +741,12 @@
 
     document.querySelectorAll('.tagline').forEach((section) => {
       const words = section.querySelectorAll('.word');
+      const chips = section.querySelectorAll('.chip');
       const chipImgs = section.querySelectorAll('.chip img');
       const cta = section.querySelector('.cta');
 
       gsap.set(words, { yPercent: 40, opacity: 0 });
+      gsap.set(chips, { yPercent: 20, opacity: 0 });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -736,8 +762,15 @@
           yPercent: 0,
           opacity: 1,
           ease: 'power3.out',
-          stagger: 0.08,
+          stagger: 0.12,
           duration: 0.6,
+        }, "start")
+        .to(chips, {
+          yPercent: 0,
+          opacity: 1,
+          ease: 'power3.out',
+          stagger: 0.08,
+          duration: 0.2,
         }, "start")
         .to(chipImgs, {
           opacity: 1,
