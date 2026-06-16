@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fitpass — We support you</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f2ec;
+      --muted: #c0b8b0;
+      --orange-1: #ff4302;
+      --orange-2: #ffa155;
+      --chip-bg: #ebe3da;
+    }
+
+    @property --h {
+      syntax: '<number>';
+      inherits: false;
+      initial-value: 1;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+      color: var(--muted);
+    }
+
+    body {
+      background-color: var(--bg);
+      --t-dark: rgba(0, 0, 0, 1);
+      --t-muted: rgba(30, 10, 71, 0.22);
+    }
+
+    .spacer {
+      height: 40vh;
+    }
+
+    .spacer--big {
+      height: 80vh;
+    }
+
+    .spacer--small {
+      height: 20vh;
+    }
+
+    .tagline {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 120px 40px 160px;
+      text-align: center;
+    }
+
+    /* Per-section color theming via CSS vars */
+    .tagline {
+      --t-grad-1: var(--orange-1);
+      --t-grad-2: var(--orange-2);
+      --t-cta: var(--orange-1);
+    }
+
+    .tagline.purple {
+      --t-grad-1: #7449d3;
+      --t-grad-2: #bba9f9;
+      --t-cta: #6600cc;
+    }
+
+    .headline {
+      font-weight: 700;
+      font-size: clamp(40px, 7vw, 90px);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      /* color: var(--t-muted); */
+      color: var(--t-dark);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 14px 22px;
+      margin: 0;
+    }
+
+    /* Words: hidden by default, animated via ScrollTrigger */
+    .word {
+      display: inline-flex;
+      will-change: transform, opacity;
+    }
+
+    .gradient {
+      background: linear-gradient(3deg, var(--t-grad-1) 0%, var(--t-grad-2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* Chip = mask container; image starts fully clipped from center */
+    .chip {
+      display: inline-flex;
+      width: clamp(110px, 13.5vw, 194px);
+      height: clamp(48px, 6vw, 85px);
+      border-radius: 10px;
+      overflow: hidden;
+      background: linear-gradient(3deg, var(--t-grad-1) 0%, var(--t-grad-2) 100%);
+      vertical-align: middle;
+      position: relative;
+    }
+
+    .chip img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      transform: scale(1.2);
+      will-change: opacity, transform;
+    }
+
+    .cta {
+      margin-top: 56px;
+      display: inline-block;
+      color: var(--t-cta);
+      font-weight: 700;
+      font-size: 26px;
+      text-decoration: none;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .cta::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -8px;
+      height: 3px;
+      background: var(--t-cta);
+      border-radius: 2px;
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+
+    .cta:hover::after {
+      --h: 0;
+    }
+
+    /* ---------- Parallax / Frosted-glass section ---------- */
+    .parallax {
+      position: relative;
+      height: 100vh;
+      min-height: 720px;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+
+    .parallax__bg {
+      position: absolute;
+      inset: -15% 0;
+      /* extra height so it can pan without exposing edges */
+      width: 100%;
+      height: 130%;
+      background-image: url('assets/gym-bg.jpg');
+      background-size: cover;
+      background-position: center;
+      will-change: transform;
+    }
+
+    .parallax__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 50%, rgba(255, 66, 0, 0.25) 100%);
+      pointer-events: none;
+    }
+
+    .parallax__inner {
+      position: relative;
+      max-width: 1340px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .glass-card {
+      position: relative;
+      width: min(664px, 100%);
+      padding: 56px 60px 48px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.10);
+      box-shadow: 0 43px 60px -30px rgba(0, 0, 0, 0.18);
+      backdrop-filter: blur(20px) saturate(1.2);
+      color: #fff;
+    }
+
+    /* Gradient border: opaque at top-left + bottom-right, transparent at top-right + bottom-left */
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0.4) 0%,
+          rgba(255, 255, 255, 0) 50%,
+          rgba(255, 255, 255, 0.4) 100%);
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .glass-card h2 {
+      font-size: clamp(28px, 3vw, 40px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0 0 28px;
+    }
+
+    .glass-card h2 .dim {
+      color: rgba(255, 255, 255, 0.49);
+    }
+
+    .glass-card p {
+      font-size: clamp(16px, 1.4vw, 21px);
+      font-weight: 500;
+      line-height: 1.45;
+      margin: 0 0 36px;
+      max-width: 506px;
+    }
+
+    .glass-card a {
+      display: inline-block;
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 8px;
+    }
+
+    .glass-card a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background: #fff;
+      transform: scaleX(1);
+      transform-origin: left;
+      transition: transform .4s ease;
+    }
+
+    .glass-card a:hover::after {
+      transform: scaleX(0);
+    }
+
+    /* ---------- Stat-cards stagger section ---------- */
+    .stats {
+      max-width: 1340px;
+      margin: 0 auto;
+      padding: 80px 50px 260px;
+      /* extra bottom space for the staggered offsets */
+    }
+
+    .stats__row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      align-items: start;
+    }
+
+    .stat-card {
+      background: #ebe3da;
+      border-radius: 15px;
+      box-shadow: 0 73px 104px -60px rgba(34, 19, 65, 0.13);
+      aspect-ratio: 440 / 609;
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .stat-card {
+      will-change: transform;
+    }
+
+    .stat-card__media {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-card__media img {
+      max-width: 70%;
+      max-height: 60%;
+      object-fit: contain;
+    }
+
+    .stat-card__number {
+      font-size: clamp(34px, 4vw, 50px);
+      font-weight: 700;
+      color: #000;
+      line-height: 1.1;
+      margin: 0;
+    }
+
+    .stat-card__label {
+      font-size: clamp(20px, 2.2vw, 30px);
+      font-weight: 700;
+      color: rgba(0, 0, 0, 0.25);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ---------- Progress section (orange) ---------- */
+    .progress-sec {
+      max-width: 1340px;
+      margin: 0 auto;
+      padding: 140px 50px 280px;
+      text-align: center;
+      color: #fff;
+    }
+    .progress-sec__title {
+      font-weight: 700;
+      font-size: clamp(40px, 5.5vw, 70px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0 auto;
+      max-width: 870px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px 18px;
+    }
+    .progress-sec__title .word {
+      display: inline-flex;
+    }
+    .progress-sec__subtitle {
+      font-size: clamp(15px, 1.3vw, 19px);
+      font-weight: 500;
+      line-height: 1.5;
+      margin: 26px auto 80px;
+      max-width: 494px;
+      color: rgba(255,255,255,0.9);
+      opacity: 0;
+    }
+    .progress-sec__row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-bottom: 120px;
+    }
+    .progress-card {
+      background: #C7B59F;
+      position: relative;
+      aspect-ratio: 405 / 454;
+      border-radius: 15px;
+      box-shadow: 0 40px 60px -30px rgba(80, 12, 0, 0.35);
+      will-change: transform;
+    }
+
+    .progress-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+    }
+    .progress-card__label {
+      position: absolute;
+      left: 50%;
+      bottom: -30px;
+      transform: translateX(-50%);
+      z-index: 1;
+      padding: 18px 40px;
+      border-radius: 10px;
+      background: linear-gradient(166deg, rgba(255, 77, 0, 0.55) 0%, rgba(255, 77, 0, 0.15) 100%);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-weight: 700;
+      font-size: clamp(20px, 1.8vw, 26px);
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      box-shadow: 0 33px 42px -20px rgba(0,0,0,0.25);
+    }
+    .progress-card__label::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0.4) 0%,
+          rgba(255, 255, 255, 0) 50%,
+          rgba(255, 255, 255, 0.4) 100%);
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    .progress-sec__cta {
+      display: inline-block;
+      background: #fff;
+      color: var(--orange-1);
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.02em;
+      padding: 18px 40px;
+      border-radius: 105px;
+      text-decoration: none;
+      box-shadow: 0 15px 15px -10px rgba(104,27,0,0.27);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .word {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .chip img {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .cta {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .cta::after {
+        transform: scaleX(1) !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="spacer spacer--big"></div>
+
+  <section class="tagline" data-bg="#f6f2ec">
+    <h1 class="headline" aria-label="We unbeatably support you in living your best routine.">
+      <span class="word">We</span>
+      <span class="chip"><img src="assets/jumper.jpg" alt=""></span>
+      <span class="word">unbeatably</span>
+
+      <span class="word gradient">support&nbsp;you</span>
+      <span class="word">in</span>
+      <span class="chip"><img src="assets/ropes.jpg" alt=""></span>
+      <span class="word">living</span>
+
+      <span class="word">your&nbsp;best</span>
+      <span class="chip"><img src="assets/gym.jpg" alt=""></span>
+      <span class="word">routine.</span>
+    </h1>
+
+    <a href="#" class="cta">Get Started</a>
+  </section>
+
+  <div class="spacer"></div>
+
+  <section class="tagline purple" data-bg="#f1f1ff">
+    <h1 class="headline" aria-label="Your personal coach in your pocket.">
+      <span class="word">Your</span>
+      <span class="chip"><img src="assets/coach1.jpg" alt=""></span>
+      <span class="word gradient">personal&nbsp;coach</span>
+
+      <span class="word">in&nbsp;your</span>
+      <span class="chip"><img src="assets/coach2.jpg" alt=""></span>
+      <span class="word">pocket.</span>
+    </h1>
+
+    <a href="#" class="cta">Try Fitpass</a>
+  </section>
+
+  <div class="spacer"></div>
+
+  <section class="parallax" data-bg="#f6f2ec" id="parallax-1">
+    <div class="parallax__bg"></div>
+    <div class="parallax__overlay"></div>
+    <div class="parallax__inner">
+      <div class="glass-card">
+        <h2>
+          Try out new activities everyday,
+          <span class="dim">without getting stuck with one routine.</span>
+        </h2>
+        <p>You always get to discover new ways to move, recharge, and enjoy a variety of wellness experiences, in real
+          life and online.</p>
+        <a href="#">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="spacer spacer--small"></div>
+
+  <section class="stats" data-bg="#f6f2ec">
+    <div class="stats__row">
+      <article class="stat-card">
+        <div class="stat-card__media"><img src="assets/stat-venues.jpg" alt=""></div>
+        <p class="stat-card__number">4,000+</p>
+        <p class="stat-card__label">Venues</p>
+      </article>
+      <article class="stat-card">
+        <div class="stat-card__media"><img src="assets/stat-activities.jpg" alt=""></div>
+        <p class="stat-card__number">165+</p>
+        <p class="stat-card__label">Activities</p>
+      </article>
+      <article class="stat-card">
+        <div class="stat-card__media"><img src="assets/stat-users.jpg" alt=""></div>
+        <p class="stat-card__number">500K+</p>
+        <p class="stat-card__label">Users</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="progress-sec" data-bg="#ff4302" data-bg-offset="20">
+    <h2 class="progress-sec__title">With Fitpass, you're equipped for progress</h2>
+    <p class="progress-sec__subtitle">
+      Fitpass supports you on your wellness journey by helping you understand your body and mind, so you can build habits that truly work for you.
+    </p>
+
+    <div class="progress-sec__row">
+      <article class="progress-card">
+        <img src="assets/progress-movement.png" alt="">
+        <span class="progress-card__label">Movement</span>
+      </article>
+      <article class="progress-card">
+        <img src="assets/progress-relax.jpg" alt="">
+        <span class="progress-card__label">Relax</span>
+      </article>
+      <article class="progress-card">
+        <img src="assets/progress-recover.png" alt="">
+        <span class="progress-card__label">Recover</span>
+      </article>
+    </div>
+
+    <a href="#" class="progress-sec__cta">Visit Our Blog</a>
+  </section>
+
+  <div class="spacer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+
+    // Body background scrubs into this section's color over a ~25% viewport band.
+    // data-bg-offset (-100..100) shifts the band by that percentage of viewport:
+    // + = earlier, - = later.
+    document.querySelectorAll('[data-bg]').forEach((section) => {
+      const bg = section.dataset.bg;
+      const offset = Math.max(-100, Math.min(100, parseFloat(section.dataset.bgOffset) || 0));
+      const startPct = Math.max(0, Math.min(100, 60 + offset));
+      const endPct = Math.max(0, Math.min(100, startPct - 25));
+      gsap.to(document.body, {
+        backgroundColor: bg,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: `top ${startPct}%`,
+          end: `top ${endPct}%`,
+          scrub: true,
+        }
+      });
+    });
+
+    // Stats cards — each card slides up from a different offset, scroll-linked, staggered entry
+    document.querySelectorAll('.stats').forEach((section) => {
+      const cards = section.querySelectorAll('.stat-card');
+      const offsets = [0, 160, 320]; // card 1 arrives first, card 3 last
+      cards.forEach((card, i) => {
+        gsap.fromTo(card,
+          { y: offsets[i] },
+          {
+            y: 0,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 80%',
+              end: 'top center-=10%',
+              scrub: 0.8,
+            }
+          }
+        );
+      });
+    });
+
+    // Progress section — title split into chars (SplitText), cards stagger up, subtitle + cta fade-in
+    document.querySelectorAll('.progress-sec').forEach((section) => {
+      const title = section.querySelector('.progress-sec__title');
+      const subtitle = section.querySelector('.progress-sec__subtitle');
+      const cards = section.querySelectorAll('.progress-card');
+      const cta = section.querySelector('.progress-sec__cta');
+
+      // Two title animation modes — toggle with `.title--chars` (per-char split)
+      // vs default (per-word rise, same mechanic as .tagline headlines)
+      if (title.classList.contains('title--chars')) {
+        const split = new SplitText(title, { type: 'words,chars' });
+        gsap.from(split.chars, {
+          duration: 0.8,
+          opacity: 0,
+          y: 10,
+          ease: 'circ.out',
+          stagger: 0.02,
+          scrollTrigger: {
+            trigger: title,
+            start: 'top 75%',
+            end: 'bottom center',
+            scrub: 1,
+          }
+        });
+      } else {
+        const split = new SplitText(title, { type: 'words' });
+        gsap.set(split.words, { yPercent: 120, opacity: 0 });
+        gsap.to(split.words, {
+          yPercent: 0,
+          opacity: 1,
+          ease: 'power3.out',
+          stagger: 0.08,
+          duration: 0.6,
+          scrollTrigger: {
+            trigger: title,
+            start: 'top 60%',
+            end: 'bottom center',
+            scrub: 0.4,
+          }
+        });
+      }
+
+      gsap.to(subtitle, {
+        opacity: 1,
+        y: 0,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 30%',
+          end: 'top 20%',
+          scrub: 0.4,
+          /* markers: true, */
+        }
+      });
+
+      gsap.to(cta, {
+        opacity: 1,
+        y: 0,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 40%',
+          end: 'top 20%',
+          scrub: 0.4,
+        }
+      });
+
+      // Cards: staggered Y entry, scroll-linked (same mechanic as stats)
+      const offsets = [0, 160, 320];
+      cards.forEach((card, i) => {
+        gsap.fromTo(card,
+          { y: offsets[i] + 120 },
+          {
+            y: 0,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 80%',
+              end: 'center center',
+              scrub: 0.6,
+            }
+          }
+        );
+      });
+    });
+
+    // Parallax background — bg image pans slower than scroll while the section is in view
+    document.querySelectorAll('.parallax').forEach((section) => {
+      const bg = section.querySelector('.parallax__bg');
+      gsap.fromTo(bg,
+        {
+          yPercent: -12,
+          scale: 1
+        },
+        {
+          yPercent: 12,
+          scale: 1.1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 0.8,
+          }
+        }
+      );
+    });
+
+    document.querySelectorAll('.tagline').forEach((section) => {
+      const words = section.querySelectorAll('.word');
+      const chipImgs = section.querySelectorAll('.chip img');
+      const cta = section.querySelector('.cta');
+
+      gsap.set(words, { yPercent: 40, opacity: 0 });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 70%',
+          end: 'bottom 80%',
+          scrub: 0.3,
+        }
+      });
+
+      tl.add("start")
+        .to(words, {
+          yPercent: 0,
+          opacity: 1,
+          ease: 'power3.out',
+          stagger: 0.08,
+          duration: 0.6,
+        }, "start")
+        .to(chipImgs, {
+          opacity: 1,
+          scale: 1,
+          ease: 'power2.out',
+          stagger: 0.12,
+          duration: 0.8,
+        }, "start+=0.1")
+        .to(cta, {
+          opacity: 1,
+          y: 0,
+          ease: 'power2.out',
+          duration: 0.5,
+        }, "start+=0.6");
+
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top 70%',
+        end: 'bottom 80%',
+        scrub: 0.8,
+        onUpdate: (self) => {
+          cta.style.setProperty('--p', self.progress.toFixed(3));
+          const ul = Math.min(1, Math.max(0, (self.progress - 0.55) / 0.35));
+          cta.style.setProperty('--ul', ul.toFixed(3));
+        }
+      });
+    });
+  </script>
+  <style>
+    .cta::after {
+      transform: scaleX(calc(var(--ul, 0) * var(--h, 1)));
+      transition: --h 0.35s ease;
+    }
+
+    .cta {
+      opacity: var(--p, 0);
+      transform: translateY(calc((1 - var(--p, 0)) * 20px));
+    }
+  </style>
+</body>
+
+</html>
