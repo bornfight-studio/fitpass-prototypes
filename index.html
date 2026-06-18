@@ -369,8 +369,8 @@
     }
     .progress-sec__row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
       margin-bottom: 120px;
     }
     .progress-card {
@@ -577,6 +577,10 @@
         <img src="assets/progress-recover.png" alt="">
         <span class="progress-card__label">Recover</span>
       </article>
+      <article class="progress-card">
+        <img src="assets/progress-community.jpg" alt="">
+        <span class="progress-card__label">Community</span>
+      </article>
     </div>
 
     <a href="#" class="progress-sec__cta">Visit Our Blog</a>
@@ -699,7 +703,7 @@
       });
 
       // Cards: staggered Y entry, scroll-linked (same mechanic as stats)
-      const offsets = [0, 160, 320];
+      const offsets = [0, 120, 240, 360];
       cards.forEach((card, i) => {
         gsap.fromTo(card,
           { y: offsets[i] + 120 },
