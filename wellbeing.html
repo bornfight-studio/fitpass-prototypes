@@ -94,9 +94,15 @@
     .wellbeing__stage {
       position: relative;
       width: 100%;
-      max-width: 1360px;
-      margin: auto 0;
       height: 70vh;
+    }
+
+    .wellbeing__stage-inner {
+      width: 100%;
+      height: 100%;
+      max-width: 1360px;
+      margin: 0 auto;
+      position: relative;
     }
 
     .wellbeing__glow {
@@ -163,7 +169,8 @@
       box-shadow: 0 30px 50px -25px rgba(34, 19, 65, 0.18);
       will-change: transform, opacity;
     }
-/* 
+
+    /* 
     .wellbeing__card::before {
       content: "";
       position: absolute;
@@ -288,30 +295,32 @@
     </div>
 
     <div class="wellbeing__stage">
-      <div class="wellbeing__glow"></div>
+      <div class="wellbeing__stage-inner">
+        <div class="wellbeing__glow"></div>
 
-      <div class="wellbeing__phone">
-        <div class="wellbeing__phone-screen">
-          <img src="assets/wellbeing-phone.jpg" alt="Fitpass app — one pass fits all.">
+        <div class="wellbeing__phone">
+          <div class="wellbeing__phone-screen">
+            <img src="assets/wellbeing-phone.jpg" alt="Fitpass app — one pass fits all.">
+          </div>
+          <img class="wellbeing__phone-bezel" src="assets/wellbeing-iphone-bezel.png" alt="">
+          <img class="wellbeing__phone-logo" src="assets/wellbeing-fitpass-logo.svg" alt="Fitpass logo">
         </div>
-        <img class="wellbeing__phone-bezel" src="assets/wellbeing-iphone-bezel.png" alt="">
-        <img class="wellbeing__phone-logo" src="assets/wellbeing-fitpass-logo.svg" alt="Fitpass logo">
+
+        <article class="wellbeing__card wellbeing__card--1">
+          <h3>Move freely. Everywhere across 600 locations.</h3>
+          <p>Explore 600+ locations to train, stretch, swim, and recharge.</p>
+        </article>
+
+        <article class="wellbeing__card wellbeing__card--2">
+          <h3>Try new activities daily, avoid routine.</h3>
+          <p>Change your routine. Explore gyms, yoga studios, and wellness experiences.</p>
+        </article>
+
+        <article class="wellbeing__card wellbeing__card--3">
+          <h3>Keep going, you're ready for progress.</h3>
+          <p>Track progress, follow workouts, and reflect on your journey.</p>
+        </article>
       </div>
-
-      <article class="wellbeing__card wellbeing__card--1">
-        <h3>Move freely. Everywhere across 600 locations.</h3>
-        <p>Explore 600+ locations to train, stretch, swim, and recharge.</p>
-      </article>
-
-      <article class="wellbeing__card wellbeing__card--2">
-        <h3>Try new activities daily, avoid routine.</h3>
-        <p>Change your routine. Explore gyms, yoga studios, and wellness experiences.</p>
-      </article>
-
-      <article class="wellbeing__card wellbeing__card--3">
-        <h3>Keep going, you're ready for progress.</h3>
-        <p>Track progress, follow workouts, and reflect on your journey.</p>
-      </article>
     </div>
 
     <div class="wellbeing__stage-spacer"></div>
@@ -348,7 +357,7 @@
           pinSpacing: false,
         }
       })
-      .add("start")
+        .add("start")
         .to(subtitle, { opacity: 0, duration: 0.2, ease: 'none' }, "start")
         .to(lines[0], { x: '-35vw', duration: 0.4, ease: 'none' }, "start+=0.2")
         .to(lines[0], { opacity: 0, duration: 0.1, ease: 'none' }, "start+=0.4")
