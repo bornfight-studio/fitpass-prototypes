@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fitpass — Your wellbeing partner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f3ee;
+      --muted: #c0b8b0;
+      --w-grad-1: #ff4201;
+      --w-grad-2: #b48dff;
+      --card-bg: #fefcfa;
+      --card-border-1: #e8dcce;
+      --card-border-2: #ff4d00;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+      color: var(--muted);
+    }
+
+    body {
+      background-color: var(--bg);
+    }
+
+    .spacer {
+      height: 40vh;
+    }
+
+    .spacer--big {
+      height: 80vh;
+    }
+
+    /* ---------- Wellbeing section ---------- */
+    .wellbeing {
+      /* max-width: 1340px; */
+      margin: 0 auto;
+      padding: 0 40px;
+      max-width: 100%;
+      overflow: hidden;
+    }
+
+    .wellbeing__intro {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      padding-bottom: 160px;
+    }
+
+    .wellbeing__title {
+      font-weight: 700;
+      font-size: clamp(32px, 4.6vw, 58px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: #000;
+      margin: 0;
+    }
+
+    .wellbeing__title span {
+      display: block;
+      will-change: transform;
+    }
+
+    .wellbeing__title .gradient {
+      background: linear-gradient(90deg, var(--w-grad-1) 0%, var(--w-grad-2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .wellbeing__subtitle {
+      font-weight: 500;
+      font-size: clamp(16px, 1.8vw, 26px);
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      color: #000;
+      max-width: 700px;
+      margin: 28px auto 0;
+    }
+
+    /* Stage: phone mockup + floating cards, positioned from a 1360x852 reference box */
+    .wellbeing__stage {
+      position: relative;
+      width: 100%;
+      max-width: 1360px;
+      margin: auto 0;
+      height: 70vh;
+    }
+
+    .wellbeing__glow {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 84%;
+      aspect-ratio: 1 / 1;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(255, 66, 0, 0.48) 0%, rgba(255, 66, 0, 0) 70%);
+      filter: blur(40px);
+      pointer-events: none;
+      will-change: opacity;
+    }
+
+    .wellbeing__phone {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 25%;
+      height: auto;
+      aspect-ratio: 326 / 656;
+    }
+
+    .wellbeing__phone-screen {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      border-radius: 12% / 6.5%;
+    }
+
+    .wellbeing__phone-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .wellbeing__phone-bezel {
+      position: absolute;
+      inset: -3.5% -7.6%;
+      width: 115.2%;
+      height: 107%;
+      pointer-events: none;
+    }
+
+    .wellbeing__phone-logo {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 68.6%;
+      pointer-events: none;
+      aspect-ratio: 270 / 35;
+    }
+
+    .wellbeing__card {
+      position: absolute;
+      width: 25.59%;
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 30px 24px;
+      box-shadow: 0 30px 50px -25px rgba(34, 19, 65, 0.18);
+      will-change: transform, opacity;
+    }
+/* 
+    .wellbeing__card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(177deg, var(--card-border-1) 19%, var(--card-border-2) 97%);
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    } */
+
+    .wellbeing__card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: #000;
+      margin: 0 0 12px;
+    }
+
+    .wellbeing__card p {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+      color: rgba(0, 0, 0, 0.55);
+      margin: 0;
+    }
+
+    .wellbeing__card--1 {
+      left: 0%;
+      top: 7.04%;
+    }
+
+    .wellbeing__card--2 {
+      left: 74.41%;
+      top: 41.2%;
+    }
+
+    .wellbeing__card--3 {
+      left: 2.94%;
+      top: 75.47%;
+    }
+
+    /* Scroll pacing only — gives the pinned card-reveal room to play out before
+       the CTA block is allowed to enter the viewport and release the pin. */
+    .wellbeing__stage-spacer {
+      height: 120vh;
+    }
+
+    .wellbeing__cta-block {
+      width: 100%;
+      max-width: 647px;
+      margin: 0 auto;
+      text-align: center;
+      padding-top: 80px;
+    }
+
+    .wellbeing__cta-text {
+      font-weight: 700;
+      font-size: clamp(24px, 3vw, 36px);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #000;
+      margin: 0;
+    }
+
+    .wellbeing__buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 30px;
+      border-radius: 105px;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn--gradient {
+      background: linear-gradient(90deg, var(--w-grad-1) 0%, var(--w-grad-2) 100%);
+      color: #fff;
+    }
+
+    .btn--white {
+      background: #fff;
+      color: #000;
+    }
+
+    @media (max-width: 720px) {
+      .wellbeing__buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="spacer spacer--big"></div>
+
+  <section class="wellbeing" data-bg="#f7f3ee">
+    <div class="wellbeing__intro">
+      <h1 class="wellbeing__title">
+        <span>More than fitness.</span>
+        <span class="gradient">Your wellbeing partner.</span>
+      </h1>
+      <p class="wellbeing__subtitle">From workouts and recovery to mindfulness and healthy habits, Fitpass helps you
+        take care of yourself—wherever life takes you.</p>
+    </div>
+
+    <div class="wellbeing__stage">
+      <div class="wellbeing__glow"></div>
+
+      <div class="wellbeing__phone">
+        <div class="wellbeing__phone-screen">
+          <img src="assets/wellbeing-phone.jpg" alt="Fitpass app — one pass fits all.">
+        </div>
+        <img class="wellbeing__phone-bezel" src="assets/wellbeing-iphone-bezel.png" alt="">
+        <img class="wellbeing__phone-logo" src="assets/wellbeing-fitpass-logo.svg" alt="Fitpass logo">
+      </div>
+
+      <article class="wellbeing__card wellbeing__card--1">
+        <h3>Move freely. Everywhere across 600 locations.</h3>
+        <p>Explore 600+ locations to train, stretch, swim, and recharge.</p>
+      </article>
+
+      <article class="wellbeing__card wellbeing__card--2">
+        <h3>Try new activities daily, avoid routine.</h3>
+        <p>Change your routine. Explore gyms, yoga studios, and wellness experiences.</p>
+      </article>
+
+      <article class="wellbeing__card wellbeing__card--3">
+        <h3>Keep going, you're ready for progress.</h3>
+        <p>Track progress, follow workouts, and reflect on your journey.</p>
+      </article>
+    </div>
+
+    <div class="wellbeing__stage-spacer"></div>
+
+    <div class="wellbeing__cta-block">
+      <p class="wellbeing__cta-text">Building a healthy routine doesn't happen overnight.</p>
+      <div class="wellbeing__buttons">
+        <a href="#" class="btn btn--gradient">See network</a>
+        <a href="#" class="btn btn--white">Get quote</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="spacer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Intro: pins centered on screen. While pinned, subtitle fades out and the
+    // two title lines slide off screen in opposite directions (first left, second right).
+    document.querySelectorAll('.wellbeing__intro').forEach((intro) => {
+      const lines = intro.querySelectorAll('.wellbeing__title span');
+      const subtitle = intro.querySelector('.wellbeing__subtitle');
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: intro,
+          start: 'center center',
+          end: '+=60%',
+          scrub: 0.6,
+          pin: true,
+          pinSpacing: false,
+        }
+      })
+      .add("start")
+        .to(subtitle, { opacity: 0, duration: 0.2, ease: 'none' }, "start")
+        .to(lines[0], { x: '-35vw', duration: 0.4, ease: 'none' }, "start+=0.2")
+        .to(lines[0], { opacity: 0, duration: 0.1, ease: 'none' }, "start+=0.4")
+        .to(lines[1], { x: '35vw', duration: 0.4, ease: 'none' }, "start+=0.2")
+        .to(lines[1], { opacity: 0, duration: 0.1, ease: 'none' }, "start+=0.4")
+        ;
+    });
+
+    // Stage: glow fades in as the phone/glow enter the viewport (0 at entry, 1 once
+    // centered). Phone + glow then pin centered while the three cards slide in one
+    // by one from the sides (cards 1 & 3 from the left, card 2 from the right).
+    // The pin releases as the CTA block enters the viewport.
+    document.querySelectorAll('.wellbeing__stage').forEach((stage) => {
+      const glow = stage.querySelector('.wellbeing__glow');
+      const cards = stage.querySelectorAll('.wellbeing__card');
+      const ctaBlock = stage.parentElement.querySelector('.wellbeing__cta-block');
+      const logo = stage.querySelector('.wellbeing__phone-logo');
+
+      gsap.set(glow, { opacity: 0 });
+      gsap.set(logo, { opacity: 0, yPercent: 20 });
+      gsap.set(cards[0], { opacity: 0, xPercent: -30 });
+      gsap.set(cards[1], { opacity: 0, xPercent: 30 });
+      gsap.set(cards[2], { opacity: 0, xPercent: -30 });
+
+      gsap.to(glow, {
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: stage,
+          start: 'top bottom',
+          end: 'center center',
+          scrub: 0.6,
+        }
+      });
+
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: stage,
+          start: 'center center',
+          endTrigger: ctaBlock,
+          end: 'top bottom',
+          scrub: 0.6,
+          pin: true,
+          // markers: true,
+          pinSpacing: false,
+        }
+      })
+        .add("start")
+        .to(cards[0], { xPercent: 0, duration: 0.2, ease: 'none' }, "start")
+        .to(cards[0], { opacity: 1, duration: 0.1, delay: 0.1, ease: 'none' }, "start")
+        .to(cards[1], { xPercent: 0, duration: 0.2, ease: 'none' }, "start+=0.1")
+        .to(cards[1], { opacity: 1, duration: 0.1, delay: 0.1, ease: 'none' }, "start+=0.1")
+        .to(cards[2], { xPercent: 0, duration: 0.2, ease: 'none' }, "start+=0.2")
+        .to(cards[2], { opacity: 1, duration: 0.1, delay: 0.1, ease: 'none' }, "start+=0.1")
+        .to(logo, { opacity: 1, yPercent: 0, duration: 0.2, ease: 'none' }, "start-=0.1");
+    });
+  </script>
+</body>
+
+</html>
