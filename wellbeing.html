@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <style>
     :root {
       --bg: #f7f3ee;
@@ -272,6 +273,144 @@
       color: #000;
     }
 
+    /* ---------- Carousel section ---------- */
+    .carousel-sec {
+      max-width: 100%;
+      overflow: hidden;
+      margin: 0 auto;
+      padding: 0 40px;
+      text-align: center;
+    }
+
+    .carousel-sec__title {
+      font-weight: 700;
+      font-size: clamp(32px, 4.6vw, 58px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: #000;
+      margin: 0 auto;
+      max-width: 900px;
+    }
+
+    .wb-slider {
+      /* Visual gap kept constant between card EDGES regardless of scale — see the
+         translateX compensation computed alongside scale in the progress handler. */
+      --wb-slide-gap: 24px;
+      margin-top: 90px;
+      padding: 10px 0 40px;
+      overflow: visible;
+    }
+
+    .wb-slider .swiper-wrapper {
+      align-items: center;
+    }
+
+    .wb-slide {
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wb-slide__media {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      transform: scale(1);
+      transform-origin: center;
+      transition: transform 0.3s ease;
+      will-change: transform;
+    }
+
+    .wb-slide__media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .wb-slide__overlay {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 30%;
+      background: linear-gradient(175deg, rgba(255, 77, 0, 0) 29%, rgba(255, 77, 0, 0.95) 88%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .wb-slide__badges {
+      position: absolute;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .wb-badge {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+      padding: 10px 20px;
+      border-radius: 24px;
+      white-space: nowrap;
+    }
+
+    .carousel-sec__nav {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 30px;
+    }
+
+    .carousel-nav-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background: #fff;
+      color: #000;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    .carousel-nav-btn:hover {
+      background: #f0f0f0;
+    }
+
+    .carousel-nav-btn.swiper-button-disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    .carousel-sec__cta {
+      max-width: 630px;
+      margin: 70px auto 0;
+    }
+
+    .carousel-sec__cta-text {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: #000;
+      margin: 0 0 30px;
+    }
+
     @media (max-width: 720px) {
       .wellbeing__buttons {
         flex-direction: column;
@@ -330,6 +469,84 @@
       <div class="wellbeing__buttons">
         <a href="#" class="btn btn--gradient">See network</a>
         <a href="#" class="btn btn--white">Get quote</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="spacer"></div>
+
+  <section class="carousel-sec" data-bg="#f7f3ee">
+    <h2 class="carousel-sec__title">Your wellbeing needs change.<br>So should your options.</h2>
+
+    <div class="swiper wb-slider">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide wb-slide">
+          <div class="wb-slide__media">
+            <img src="assets/slider-mindfulness.jpg" alt="Mindfulness & Recovery">
+            <div class="wb-slide__overlay"></div>
+            <div class="wb-slide__badges">
+              <span class="wb-badge">420+</span>
+              <span class="wb-badge">Mindfulness &amp; Recovery</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-slide wb-slide">
+          <div class="wb-slide__media">
+            <img src="assets/slider-cardio.jpg" alt="Cardio & Classes">
+            <div class="wb-slide__overlay"></div>
+            <div class="wb-slide__badges">
+              <span class="wb-badge">70+</span>
+              <span class="wb-badge">Cardio &amp; Classes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-slide wb-slide">
+          <div class="wb-slide__media">
+            <img src="assets/slider-gym.jpg" alt="Gym & Strength">
+            <div class="wb-slide__overlay"></div>
+            <div class="wb-slide__badges">
+              <span class="wb-badge">600+</span>
+              <span class="wb-badge">Gym &amp; strenght</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-slide wb-slide">
+          <div class="wb-slide__media">
+            <img src="assets/slider-swimming.jpg" alt="Swimming">
+            <div class="wb-slide__overlay"></div>
+            <div class="wb-slide__badges">
+              <span class="wb-badge">30+</span>
+              <span class="wb-badge">Swimming</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="swiper-slide wb-slide">
+          <div class="wb-slide__media">
+            <img src="assets/slider-yoga.jpg" alt="Yoga & Pilates">
+            <div class="wb-slide__overlay"></div>
+            <div class="wb-slide__badges">
+              <span class="wb-badge">30+</span>
+              <span class="wb-badge">Yoga &amp; Pilates</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-sec__nav">
+      <button type="button" class="carousel-nav-btn carousel-nav-btn--prev" aria-label="Previous slide">‹</button>
+      <button type="button" class="carousel-nav-btn carousel-nav-btn--next" aria-label="Next slide">›</button>
+    </div>
+
+    <div class="carousel-sec__cta">
+      <p class="carousel-sec__cta-text">Fitpass gives you the freedom to choose what works for you today.</p>
+      <div class="wellbeing__buttons">
+        <a href="#" class="btn btn--gradient">Download app</a>
+        <a href="#" class="btn btn--white">Try for free</a>
       </div>
     </div>
   </section>
@@ -413,6 +630,83 @@
         .to(cards[2], { xPercent: 0, duration: 0.2, ease: 'none' }, "start+=0.2")
         .to(cards[2], { opacity: 1, duration: 0.1, delay: 0.1, ease: 'none' }, "start+=0.1")
         .to(logo, { opacity: 1, yPercent: 0, duration: 0.2, ease: 'none' }, "start-=0.1");
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    // Carousel: centered, looping Swiper — 5 slides visible at once. Slides scale
+    // down the further they are from the centered (active) slide; only the active
+    // slide shows the orange overlay, fading out as it moves away from center.
+    //
+    // A fixed numeric slidesPerView (rather than 'auto') is what makes Swiper's
+    // loop duplication reliable — 'auto' width loop mode is known to miscalculate
+    // its clone buffer on small slide sets and drift the active index out of bounds.
+    //
+    // Loop mode also needs more real slides than are visible at once to draw its
+    // duplicate buffer from — with only 5 originals and 5 visible, there's no
+    // surplus, so the base set is tripled (15 total) before Swiper initializes.
+    (function ensureEnoughSlidesForLoop() {
+      const wrapper = document.querySelector('.wb-slider .swiper-wrapper');
+      const originals = Array.from(wrapper.children);
+      for (let i = 0; i < 2; i++) {
+        originals.forEach((slide) => wrapper.appendChild(slide.cloneNode(true)));
+      }
+    })();
+
+    new Swiper('.wb-slider', {
+      loop: true,
+      centeredSlides: true,
+      slidesPerView: 3.5,
+      spaceBetween: 12,
+      speed: 600,
+      grabCursor: true,
+      watchSlidesProgress: true,
+      navigation: {
+        nextEl: '.carousel-nav-btn--next',
+        prevEl: '.carousel-nav-btn--prev',
+      },
+      on: {
+        // Swiper lays slides out on a fixed grid (slot width + spaceBetween), so
+        // scaling a slide's content down leaves growing empty space inside its
+        // slot — the visual gap between shrunk neighbors would otherwise stretch
+        // the further from center they are. To keep that edge-to-edge gap equal
+        // and constant, each slide gets an extra translateX correction: nominal
+        // grid position vs. a "packed" position where slides sit back-to-back
+        // with a fixed --wb-slide-gap between their (scaled) edges. The packed
+        // position is a smooth closed-form approximation (integral of local
+        // scaled width + gap over progress) so it stays continuous during drag.
+        progress(swiper) {
+          const slotWidth = swiper.slides.length ? swiper.slides[0].offsetWidth : 0;
+          const gap = parseFloat(getComputedStyle(swiper.el).getPropertyValue('--wb-slide-gap')) || 0;
+          const gridStep = slotWidth + swiper.params.spaceBetween;
+
+          swiper.slides.forEach((slideEl) => {
+            const p = slideEl.progress;
+            const distance = Math.min(Math.abs(p), 3);
+            const scale = 1 / (1 + 0.25 * distance);
+
+            const sign = p < 0 ? -1 : 1;
+            const packed = 4 * slotWidth * Math.log(1 + 0.25 * Math.abs(p)) + gap * Math.abs(p);
+            const nominal = gridStep * p;
+            // Swiper's own screen position moves opposite to +p, so pulling a
+            // slide toward the tighter "packed" spacing means countering nominal
+            // by that same (positive-p-moves-left) convention, not adding to it.
+            const offsetX = nominal - sign * packed;
+
+            const media = slideEl.querySelector('.wb-slide__media');
+            const overlay = slideEl.querySelector('.wb-slide__overlay');
+            if (media) media.style.transform = `translateX(${offsetX}px) scale(${scale})`;
+            if (overlay) overlay.style.opacity = Math.max(0, 1 - distance);
+          });
+        },
+        setTransition(swiper, duration) {
+          swiper.slides.forEach((slideEl) => {
+            const media = slideEl.querySelector('.wb-slide__media');
+            if (media) media.style.transitionDuration = `${duration}ms`;
+          });
+        },
+      },
     });
   </script>
 </body>
